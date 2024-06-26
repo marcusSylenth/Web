@@ -13,8 +13,10 @@ public class RoomDetailDAO {
     private static final String DELETE_ROOMS_SQL = "DELETE FROM room_details WHERE room_id = ?;";
     private static final String UPDATE_ROOMS_SQL = "UPDATE room_details SET room_no = ?, room_picture = ?, room_type = ?, room_price = ? WHERE room_id = ?;";
 
+    // Constructor
     public RoomDetailDAO() {}
 
+    // Method to establish a database connection
     protected Connection getConnection() {
         Connection connection = null;
         try {
@@ -28,6 +30,7 @@ public class RoomDetailDAO {
         return connection;
     }
 
+    // Method to add a room detail to the database
     public void addRoomDetail(RoomDetail roomDetail) {
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ROOMS_SQL)) {
@@ -42,6 +45,7 @@ public class RoomDetailDAO {
         }
     }
 
+    // Method to get a room detail by room ID
     public RoomDetail getRoomDetail(String roomId) {
         RoomDetail roomDetail = null;
         try (Connection connection = getConnection();
@@ -66,6 +70,7 @@ public class RoomDetailDAO {
         return roomDetail;
     }
 
+    // Method to get all room details from the database
     public List<RoomDetail> getAllRoomDetails() {
         List<RoomDetail> roomDetails = new ArrayList<>();
         try (Connection connection = getConnection();
@@ -91,6 +96,7 @@ public class RoomDetailDAO {
         return roomDetails;
     }
 
+    // Method to update a room detail in the database
     public boolean updateRoomDetail(RoomDetail roomDetail) {
         boolean rowUpdated = false;
         try (Connection connection = getConnection();
@@ -107,6 +113,7 @@ public class RoomDetailDAO {
         return rowUpdated;
     }
 
+    // Method to delete a room detail from the database
     public boolean deleteRoomDetail(String roomId) {
         boolean rowDeleted = false;
         try (Connection connection = getConnection();
@@ -119,6 +126,7 @@ public class RoomDetailDAO {
         return rowDeleted;
     }
 
+    // Method to print SQL exceptions
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
