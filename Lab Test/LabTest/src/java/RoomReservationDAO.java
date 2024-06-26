@@ -7,6 +7,7 @@ public class RoomReservationDAO {
     private String jdbcUsername = "root";
     private String jdbcPassword = "password";
 
+    // SQL queries for CRUD operations
     private static final String INSERT_RESERVATION_SQL = "INSERT INTO room_reservations (reservation_code, user_id, check_in_date, check_out_date, room_type, room_id, no_of_customers, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String SELECT_RESERVATION_BY_CODE = "SELECT * FROM room_reservations WHERE reservation_code = ?;";
     private static final String SELECT_ALL_RESERVATIONS = "SELECT * FROM room_reservations;";
@@ -15,6 +16,7 @@ public class RoomReservationDAO {
 
     public RoomReservationDAO() {}
 
+    // Method to establish a connection to the database
     protected Connection getConnection() {
         Connection connection = null;
         try {
@@ -28,6 +30,7 @@ public class RoomReservationDAO {
         return connection;
     }
 
+    // Method to add a new room reservation
     public void addRoomReservation(RoomReservation roomReservation) {
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_RESERVATION_SQL)) {
@@ -45,6 +48,7 @@ public class RoomReservationDAO {
         }
     }
 
+    // Method to get a room reservation by its code
     public RoomReservation getRoomReservation(int reservationCode) {
         RoomReservation roomReservation = null;
         try (Connection connection = getConnection();
@@ -75,6 +79,7 @@ public class RoomReservationDAO {
         return roomReservation;
     }
 
+    // Method to get all room reservations
     public List<RoomReservation> getAllRoomReservations() {
         List<RoomReservation> roomReservations = new ArrayList<>();
         try (Connection connection = getConnection();
@@ -106,6 +111,7 @@ public class RoomReservationDAO {
         return roomReservations;
     }
 
+    // Method to update an existing room reservation
     public boolean updateRoomReservation(RoomReservation roomReservation) {
         boolean rowUpdated = false;
         try (Connection connection = getConnection();
@@ -125,6 +131,7 @@ public class RoomReservationDAO {
         return rowUpdated;
     }
 
+    // Method to delete a room reservation by its code
     public boolean deleteRoomReservation(int reservationCode) {
         boolean rowDeleted = false;
         try (Connection connection = getConnection();
@@ -137,6 +144,7 @@ public class RoomReservationDAO {
         return rowDeleted;
     }
 
+    // Method to print detailed information about SQL exceptions
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
