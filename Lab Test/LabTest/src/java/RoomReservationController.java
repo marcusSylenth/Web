@@ -16,17 +16,20 @@ public class RoomReservationController extends HttpServlet {
     private RoomDetailDAO roomDetailDAO;
     private UserProfileDAO userProfileDAO;
 
+    // Initialize DAOs
     public void init() {
         roomReservationDAO = new RoomReservationDAO();
         roomDetailDAO = new RoomDetailDAO();
         userProfileDAO = new UserProfileDAO();
     }
 
+    // Handle POST requests by redirecting them to the doGet method
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
     }
 
+    // Handle GET requests and route to appropriate methods based on action parameter
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -59,6 +62,7 @@ public class RoomReservationController extends HttpServlet {
         }
     }
 
+    // List all reservations and forward to reservation-list.jsp
     private void listReservations(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<RoomReservation> listReservations = roomReservationDAO.getAllRoomReservations();
@@ -67,6 +71,7 @@ public class RoomReservationController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    // Show form to create a new reservation and forward to reservation-form.jsp
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<RoomDetail> roomDetails = roomDetailDAO.getAllRoomDetails();
@@ -75,6 +80,7 @@ public class RoomReservationController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    // Show form to edit an existing reservation and forward to reservation-form.jsp
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int reservationCode = Integer.parseInt(request.getParameter("code"));
@@ -86,6 +92,7 @@ public class RoomReservationController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    // Insert a new reservation into the database and redirect to the list page
     private void insertReservation(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         String userId = request.getParameter("userId");
@@ -109,6 +116,7 @@ public class RoomReservationController extends HttpServlet {
         response.sendRedirect("reservation?action=list");
     }
 
+    // Update an existing reservation in the database and redirect to the list page
     private void updateReservation(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         int reservationCode = Integer.parseInt(request.getParameter("reservationCode"));
@@ -134,6 +142,7 @@ public class RoomReservationController extends HttpServlet {
         response.sendRedirect("reservation?action=list");
     }
 
+    // Delete a reservation from the database and redirect to the list page
     private void deleteReservation(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         int reservationCode = Integer.parseInt(request.getParameter("code"));
