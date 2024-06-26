@@ -13,15 +13,18 @@ public class UserProfileController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private UserProfileDAO userProfileDAO;
 
+    // Initialize the DAO object when the servlet is first loaded
     public void init() {
         userProfileDAO = new UserProfileDAO();
     }
 
+    // Handle POST requests by delegating to doGet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
     }
 
+    // Handle GET requests by determining the action parameter and dispatching accordingly
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -54,6 +57,7 @@ public class UserProfileController extends HttpServlet {
         }
     }
 
+    // Method to list all user profiles
     private void listUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<UserProfile> listUser = userProfileDAO.getAllUserProfiles();
@@ -62,12 +66,14 @@ public class UserProfileController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    // Method to show the form for creating a new user
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
         dispatcher.forward(request, response);
     }
 
+    // Method to show the form for editing an existing user
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String userId = request.getParameter("id");
@@ -77,6 +83,7 @@ public class UserProfileController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    // Method to insert a new user into the database
     private void insertUser(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         String userId = request.getParameter("userId");
@@ -92,6 +99,7 @@ public class UserProfileController extends HttpServlet {
         response.sendRedirect("user?action=list");
     }
 
+    // Method to update an existing user in the database
     private void updateUser(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         String userId = request.getParameter("userId");
@@ -107,6 +115,7 @@ public class UserProfileController extends HttpServlet {
         response.sendRedirect("user?action=list");
     }
 
+    // Method to delete a user from the database
     private void deleteUser(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         String userId = request.getParameter("id");
