@@ -3,10 +3,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserProfileDAO {
+    // Database connection parameters
     private String jdbcURL = "jdbc:mysql://localhost:3306/labtest";
     private String jdbcUsername = "root";
     private String jdbcPassword = "password";
 
+    // SQL queries
     private static final String INSERT_USERS_SQL = "INSERT INTO user_profiles (user_id, user_name, gender, contact_no, id, age, address) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String SELECT_USER_BY_ID = "SELECT * FROM user_profiles WHERE user_id = ?;";
     private static final String SELECT_ALL_USERS = "SELECT * FROM user_profiles;";
@@ -15,6 +17,7 @@ public class UserProfileDAO {
 
     public UserProfileDAO() {}
 
+    // Method to establish database connection
     protected Connection getConnection() {
         Connection connection = null;
         try {
@@ -28,6 +31,7 @@ public class UserProfileDAO {
         return connection;
     }
 
+    // Method to add a new user profile to the database
     public void addUserProfile(UserProfile userProfile) {
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
@@ -44,6 +48,7 @@ public class UserProfileDAO {
         }
     }
 
+    // Method to get a user profile by user ID
     public UserProfile getUserProfile(String userId) {
         UserProfile userProfile = null;
         try (Connection connection = getConnection();
@@ -72,6 +77,7 @@ public class UserProfileDAO {
         return userProfile;
     }
 
+    // Method to get all user profiles
     public List<UserProfile> getAllUserProfiles() {
         List<UserProfile> userProfiles = new ArrayList<>();
         try (Connection connection = getConnection();
@@ -101,6 +107,7 @@ public class UserProfileDAO {
         return userProfiles;
     }
 
+    // Method to update an existing user profile
     public boolean updateUserProfile(UserProfile userProfile) {
         boolean rowUpdated = false;
         try (Connection connection = getConnection();
@@ -119,6 +126,7 @@ public class UserProfileDAO {
         return rowUpdated;
     }
 
+    // Method to delete a user profile
     public boolean deleteUserProfile(String userId) {
         boolean rowDeleted = false;
         try (Connection connection = getConnection();
@@ -131,6 +139,7 @@ public class UserProfileDAO {
         return rowDeleted;
     }
 
+    // Method to print SQL exceptions
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
